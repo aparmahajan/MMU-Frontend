@@ -1,4 +1,4 @@
-*Cloning Instructions:*
+_Cloning Instructions:_
 
 Run git clone https://github.com/aparmahajan/MMU-Frontend
 
