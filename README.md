@@ -1,6 +1,6 @@
-**Cloning Instructions:**
+**Cloning Instructions, run:**
 
-Run git clone https://github.com/aparmahajan/MMU-Frontend
+git clone https://github.com/aparmahajan/MMU-Frontend
 
 cd mmu-frontend
 
