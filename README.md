@@ -1,4 +1,4 @@
-**`Cloning Instructions:`**
+**Cloning Instructions:**
 
 Run git clone https://github.com/aparmahajan/MMU-Frontend
 
@@ -11,7 +11,7 @@ git checkout (branch name)
 npm install
 
 
-**`To launch site run:`**
+**To launch site run:**
 
 npm start
 
