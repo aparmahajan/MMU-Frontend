@@ -1,3 +1,13 @@
+Cloning Instructions:
+Run git clone https://github.com/aparmahajan/MMU-Frontend
+cd mmu-frontend
+git branch (new branch name)
+git checkout (branch name)
+npm install
+
+To launch site run:
+npm start
+
 # React + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
