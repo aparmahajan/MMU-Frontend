@@ -2,7 +2,7 @@ function Home({ onNavigate }) {
   return (
     <div>
       <h1>Home Page</h1>
-      <button onClick={() => onNavigate("about")}>Go to About</button>
+      <button onClick={() => onNavigate("login")}>Go to Login</button>
     </div>
   );
 }
