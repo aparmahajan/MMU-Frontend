@@ -1,5 +1,5 @@
 
-.login-container {
+.log-sign-in-container {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -9,7 +9,7 @@
 }
 
 /* Style the login box */
-.login-box {
+.log-sign-in-box {
     background: rgba(255, 255, 255, 0.313);
     padding: 2rem;
     border-radius: 8px;

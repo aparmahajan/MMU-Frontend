@@ -1,12 +1,12 @@
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
-import '../styles/Login.css';
+import '../styles/LogSignin.css';
 
 function Login(){
     const navigate = useNavigate();
     return (
-      <div className="login-container">
-        <div className="login-box">
+      <div className="log-sign-in-container">
+        <div className="log-sign-in-box">
             <h1>Melanin Meetups</h1>
             <button onClick={() => navigate("/about")}>Go to About</button>
             <LoginForm/>
@@ -39,20 +39,21 @@ const LoginForm = () => {
                 <div>
                     <input type="password" placeholder="Password" className="input-field"/>
                 </div>
-                <div>
+               
                     <p>
-                        
+
                     </p>
-                </div>
+                
                 <div>
                     <button type="submit">Login</button>
                 </div>
+                <p> </p>
                 <div>
                     <span style={{ color: "#FFFFFF" }}>
                         Don't have an account? <Link to="/signup" > Create an Account! </Link>
                     </span>
                 </div>
-
+                
                 <div>
                     <Link to="/signup" style={{ color: "#000000" }}> Forgot Password? </Link>
                 </div>
