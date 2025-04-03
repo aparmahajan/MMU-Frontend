@@ -2,16 +2,21 @@ import { useState } from "react";
 import Home from "./pages/Home";
 import About from "./pages/About";
 import Login from "./pages/Login";
-
+import Signup from "./pages/Signup";
+import {BrowserRouter, Routes, Route} from 'react-router-dom';
 function App() {
   const [currentPage, setCurrentPage] = useState("home");
 
   return (
-    <div>
-      {currentPage === "home" && <Home onNavigate={setCurrentPage} />}
-      {currentPage === "about" && <About onNavigate={setCurrentPage} />}
-      {currentPage === "login" && <Login onNavigate={setCurrentPage} />}  
-    </div>
+    <BrowserRouter>
+      <Routes>
+        {/* special protected route (protected when logged in) */}
+        <Route path='/' element={<Home/>}></Route>
+        <Route path='/about' element={<About />}></Route>
+        <Route path='/login' element={<Login />}></Route>
+        <Route path='/signup' element={<Signup />}></Route>
+      </Routes>
+    </BrowserRouter>
   );
 }
 

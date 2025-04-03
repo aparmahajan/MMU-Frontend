@@ -1,0 +1,72 @@
+
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Full viewport height */
+    width: 100vw;  /* Full viewport width */
+   
+}
+
+/* Style the login box */
+.login-box {
+    background: rgba(255, 255, 255, 0.313);
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    width: 100%;
+    max-width: 400px; /* Limits the width on large screens */
+}
+
+/* Center input fields properly */
+.form-container {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    width: 100%;
+}
+
+input {
+    width: 100%;
+    padding: 12px;
+    margin: 5px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+/* Style buttons */
+button {
+    width: 100%;
+    padding: 12px;
+    background-color: #ffffff1e;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+button:hover {
+    background-color: #4c330e;
+}
+
+/* Link styling */
+a {
+    text-decoration: none;
+    color: #46558d;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+.input-field {
+    display: block; /* Ensures input fields are on separate lines */
+    width: 95%; /* Adjust width */
+    padding: 10px;
+    margin: 5px auto; /* Centers the input fields horizontally */
+    border: 1px solid #ffffff; /* White border */
+    
+    text-align: center; /* Centers text inside the input */
+}

@@ -1,8 +1,14 @@
-function Home({ onNavigate }) {
+import { useNavigate } from "react-router-dom";
+
+function Home(){
+  
+  const navigate = useNavigate();
+  
+  
   return (
     <div>
       <h1>Home Page</h1>
-      <button onClick={() => onNavigate("login")}>Go to Login</button>
+      <button onClick={() => navigate("/login")}>Go to Login</button>
     </div>
   );
 }
