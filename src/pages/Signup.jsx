@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import '../styles/LogSignin.css';
 
 function Signup(){
-  const navigate = useNavigate();
+  
  
     return (
     <div className="log-sign-in-container">
@@ -19,6 +19,8 @@ export default Signup;
   
 
 const SignInForm = () => {
+    const navigate = useNavigate();
+    
     return (
         <div className="form-container">
             <div>
@@ -48,7 +50,7 @@ const SignInForm = () => {
                     </p>
               
                 <div>
-                    <button type="submit">Sign Up</button>
+                    <button type="submit" onClick={() => navigate("/login")}>Sign Up</button>
                 </div>
                 <p> </p>
                 <div>
