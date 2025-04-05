@@ -1,6 +1,6 @@
 import { useState } from "react";
 import Home from "./pages/Home";
-import About from "./pages/About";
+import About from "./pages/about";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import {BrowserRouter, Routes, Route} from 'react-router-dom';
