@@ -31,17 +31,40 @@ export default App;
 // App.js
 
 import { useAuth } from "react-oidc-context";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 
 function App() {
-  const auth = useAuth();
+  const auth = useAuth();  
+  const [userData, setUserData] = useState(null);
+
+ useEffect(() => {
+    if (auth.isAuthenticated) {
+
+	const accessToken = auth.user?.access_token;
+      axios
+        .get("https://zimr7w3b2j.execute-api.us-west-1.amazonaws.com/Prod/users", {
+          headers: { Authorization: `Bearer ${accessToken}` },
+        })
+        .then((response) => {
+          setUserData(response.data);
+        })
+        .catch((error) => {
+          console.error("Error fetching user data:", error);
+        });
+
+    }
+  }, [auth.isAuthenticated]);
 
   const signOutRedirect = () => {
     const clientId = "1ckqdl8f23jn6ms1d622nna6r9";
     const logoutUri = "<logout uri>";
     const cognitoDomain = "https://us-west-1z5hk8uryu.auth.us-west-1.amazoncognito.com";
     window.location.href = `${cognitoDomain}/logout?client_id=${clientId}&logout_uri=${encodeURIComponent(logoutUri)}`;
+    navigate("/");
   };
 
+  
   if (auth.isLoading) {
     return <div>Loading...</div>;
   }
@@ -57,6 +80,12 @@ function App() {
         <pre> ID Token: {auth.user?.id_token} </pre>
         <pre> Access Token: {auth.user?.access_token} </pre>
         <pre> Refresh Token: {auth.user?.refresh_token} </pre>
+
+	<div>
+  	  <h3>Fetched User Data:</h3>
+  	  <p>Name: {userData ? userData.fullName : "N/A"}</p>
+  	  <p>Email: {userData ? userData.email : "N/A"}</p>
+	</div>
 
         <button onClick={() => auth.removeUser()}>Sign out</button>
       </div>
