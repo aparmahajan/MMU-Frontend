@@ -19,6 +19,7 @@ import App from "./App";
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import './styles/index.css'
+import { BrowserRouter } from "react-router-dom";
 import { AuthProvider } from "react-oidc-context";
 
 const cognitoAuthConfig = {
@@ -35,9 +36,11 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 // wrap the application with AuthProvider
 root.render(
   <React.StrictMode>
+    <BrowserRouter>
     <AuthProvider {...cognitoAuthConfig}>
       <App />
     </AuthProvider>
+    </BrowserRouter>
   </React.StrictMode>
 );
 

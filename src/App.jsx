@@ -29,15 +29,20 @@ export default App;
 
 
 // App.js
-
+import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useAuth } from "react-oidc-context";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 
 function App() {
-  const auth = useAuth();  
-  const [userData, setUserData] = useState(null);
+ const auth = useAuth();  
+console.log("Auth object:", auth);
+console.log("isAuthenticated:", auth.isAuthenticated);
+console.log("User:", auth.user);  
 
+const [userData, setUserData] = useState(null);
+  const navigate = useNavigate();
  useEffect(() => {
     if (auth.isAuthenticated) {
 
@@ -54,14 +59,13 @@ function App() {
         });
 
     }
-  }, [auth.isAuthenticated]);
+  }, [auth.isAuthenticated, auth.user]);
 
   const signOutRedirect = () => {
     const clientId = "1ckqdl8f23jn6ms1d622nna6r9";
     const logoutUri = "<logout uri>";
     const cognitoDomain = "https://us-west-1z5hk8uryu.auth.us-west-1.amazoncognito.com";
     window.location.href = `${cognitoDomain}/logout?client_id=${clientId}&logout_uri=${encodeURIComponent(logoutUri)}`;
-    navigate("/");
   };
 
   
@@ -72,6 +76,7 @@ function App() {
   if (auth.error) {
     return <div>Encountering error... {auth.error.message}</div>;
   }
+  
 
   if (auth.isAuthenticated) {
     return (
@@ -86,7 +91,8 @@ function App() {
   	  <p>Name: {userData ? userData.fullName : "N/A"}</p>
   	  <p>Email: {userData ? userData.email : "N/A"}</p>
 	</div>
-
+ 
+  	<button onClick={() => navigate("/connections")}>Go to Connections</button>
         <button onClick={() => auth.removeUser()}>Sign out</button>
       </div>
     );
