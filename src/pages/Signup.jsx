@@ -26,9 +26,9 @@ const SignInForm = () => {
             <div>
 
             <div style={{
-                height: "1px", /* Thin bar */
+                height: "1px", // Thin bar
                 backgroundColor: "#000000", 
-                margin: "20px auto" /* Centers the bar */
+                margin: "20px auto" // Centers the bar
                 }}>
             </div>
 
