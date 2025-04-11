@@ -1,32 +1,3 @@
-{/*
-
-import { useState } from "react";
-import Home from "./pages/Home";
-import About from "./pages/about";
-import Login from "./pages/Login";
-import Signup from "./pages/Signup";
-import {BrowserRouter, Routes, Route} from 'react-router-dom';
-function App() {
-  const [currentPage, setCurrentPage] = useState("home");
-
-  return (
-    <BrowserRouter>
-      <Routes>
-        {/* special protected route (protected when logged in) */}
-        {/*}
-        <Route path='/' element={<Home/>}></Route>
-        <Route path='/about' element={<About />}></Route>
-        <Route path='/login' element={<Login />}></Route>
-        <Route path='/signup' element={<Signup />}></Route>
-      </Routes>
-    </BrowserRouter>
-  );
-}
-
-export default App;
-*/
-}
-
 
 // App.js
 import { useNavigate } from "react-router-dom";
@@ -34,6 +5,16 @@ import { Link } from "react-router-dom";
 import { useAuth } from "react-oidc-context";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+
+
+import {BrowserRouter, Routes, Route} from 'react-router-dom';
+import Login from "./pages/Login";
+import Home from "./pages/Home";
+import EditProfile from "./pages/EditProfile.jsx";
+import About from "./pages/about";
+import Connections from "./pages/Connections";
+import Signup from "./pages/Signup";
+import ViewProfile from "./pages/ProfileView.jsx";
 
 function App() {
  const auth = useAuth();  
@@ -46,12 +27,14 @@ const [userData, setUserData] = useState(null);
  useEffect(() => {
     if (auth.isAuthenticated) {
 
-	const accessToken = auth.user?.access_token;
+	const idToken = auth.user?.id_token;
+  const searchByName = "Test"; // use state
       axios
-        .get("https://zimr7w3b2j.execute-api.us-west-1.amazonaws.com/Prod/users", {
-          headers: { Authorization: `Bearer ${accessToken}` },
+        .get(`/api/search?fullName=${searchByName}`, {
+          headers: { Authorization: `Bearer ${idToken}` },
         })
         .then((response) => {
+          console.log(response.data)
           setUserData(response.data);
         })
         .catch((error) => {
@@ -81,19 +64,18 @@ const [userData, setUserData] = useState(null);
   if (auth.isAuthenticated) {
     return (
       <div>
-        <pre> Hello: {auth.user?.profile.email} </pre>
-        <pre> ID Token: {auth.user?.id_token} </pre>
-        <pre> Access Token: {auth.user?.access_token} </pre>
-        <pre> Refresh Token: {auth.user?.refresh_token} </pre>
+        {/*how to sign out*/}
+        <button onClick={() => auth.signoutRedirect()}>Sign out</button>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/edit-profile" element={<EditProfile />} />
+          <Route path="/connections" element={<Connections />} />
+          <Route path="/signup" element={<Signup />} />
+          <Route path="/view-profile" element={<ViewProfile />} />
 
-	<div>
-  	  <h3>Fetched User Data:</h3>
-  	  <p>Name: {userData ? userData.fullName : "N/A"}</p>
-  	  <p>Email: {userData ? userData.email : "N/A"}</p>
-	</div>
- 
-  	<button onClick={() => navigate("/connections")}>Go to Connections</button>
-        <button onClick={() => auth.removeUser()}>Sign out</button>
+        </Routes>
       </div>
     );
   }
@@ -101,7 +83,8 @@ const [userData, setUserData] = useState(null);
   return (
     <div>
       <button onClick={() => auth.signinRedirect()}>Sign in</button>
-      <button onClick={() => signOutRedirect()}>Sign out</button>
+      <button onClick={() => signOutRedirect()}>Sign out</button> 
+    
     </div>
   );
 }
