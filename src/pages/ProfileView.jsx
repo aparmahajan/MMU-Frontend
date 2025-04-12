@@ -62,7 +62,8 @@ const ViewProfile = () => {
                 <p><strong>Seeking:</strong> {profileData.seeking?.join(", ")}</p>
 
                 <button onClick={() => navigate("/edit-profile")}>Edit Profile</button>
-            </div>
+		<button onClick={() => navigate("/")}>Return to Home</button> 
+           </div>
         </div>
     );
 };
