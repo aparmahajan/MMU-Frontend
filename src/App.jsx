@@ -14,7 +14,7 @@ import EditProfile from "./pages/EditProfile.jsx";
 import About from "./pages/about";
 import Connections from "./pages/Connections";
 import Signup from "./pages/Signup";
-import ViewProfile from "./pages/ProfileView.jsx";
+import ViewProfile from "./pages/ProfileView";
 
 function App() {
  const auth = useAuth();  
@@ -22,13 +22,13 @@ console.log("Auth object:", auth);
 console.log("isAuthenticated:", auth.isAuthenticated);
 console.log("User:", auth.user);  
 
-const [userData, setUserData] = useState(null);
-  const navigate = useNavigate();
+	const [userData, setUserData] = useState(null);
+  	const navigate = useNavigate();
  useEffect(() => {
     if (auth.isAuthenticated) {
 
 	const idToken = auth.user?.id_token;
-  const searchByName = "Test"; // use state
+	const searchByName = "Test"; // use state
       axios
         .get(`/api/search?fullName=${searchByName}`, {
           headers: { Authorization: `Bearer ${idToken}` },
@@ -64,19 +64,21 @@ const [userData, setUserData] = useState(null);
   if (auth.isAuthenticated) {
     return (
       <div>
-        {/*how to sign out*/}
-        <button onClick={() => auth.signoutRedirect()}>Sign out</button>
-        <Routes>
-          <Route path="/" element={<Home />} />
+
+	 <Routes>
+ 	  <Route path="/" element={<Home />} />
+          <Route path="/viewprofile" element={<ViewProfile />} />         
+	  <Route path="/" element={<Home />} />
           <Route path="/about" element={<About />} />
           <Route path="/login" element={<Login />} />
           <Route path="/edit-profile" element={<EditProfile />} />
           <Route path="/connections" element={<Connections />} />
-          <Route path="/signup" element={<Signup />} />
-          <Route path="/view-profile" element={<ViewProfile />} />
+          <Route path="/signup" element={<Signup />} /> 
 
-        </Routes>
-      </div>
+         </Routes>
+	{/*how to sign out*/}
+        <button onClick={() => auth.signoutRedirect()}>Sign out</button> 
+     </div>
     );
   }
 

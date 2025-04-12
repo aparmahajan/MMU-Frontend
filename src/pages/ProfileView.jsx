@@ -36,7 +36,7 @@ const ViewProfile = () => {
         };
 
         fetchProfile();
-    }, [auth.isAuthenticated, auth.user]);
+    }, [auth.isAuthenticated]);
 
     if (!profileData) return <p>Loading profile...</p>;
 
