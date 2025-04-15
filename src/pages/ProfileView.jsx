@@ -61,8 +61,16 @@ const ViewProfile = () => {
                 <p><strong>Education:</strong> {profileData.education}</p>
                 <p><strong>Seeking:</strong> {profileData.seeking?.join(", ")}</p>
 
-                <button onClick={() => navigate("/edit-profile")}>Edit Profile</button>
-		<button onClick={() => navigate("/")}>Return to Home</button> 
+                <button onClick={() => navigate("/edit-profile")}
+		  style={{
+                    width: "250px",
+                  }}
+		>Edit Profile</button>
+		<button onClick={() => navigate("/")}
+		  style={{
+                    width: "250px",
+                  }}
+		>Return to Home</button> 
            </div>
         </div>
     );

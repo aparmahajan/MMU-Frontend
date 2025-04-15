@@ -199,8 +199,16 @@ const EditProfile = () => {
                             setSeeking(values);
                         }}
                     />
-                    <button type="submit">Save Profile</button>
-		    <button onClick={() => navigate(`/viewprofile/${profile.id}`)}>Discard Changes</button>	
+                    <button type="submit"
+			style={{
+                          width: "250px",
+                        }}
+		    >Save Profile</button>
+		    <button onClick={() => navigate(`/viewprofile/${profile.id}`)}
+			style={{
+        		  width: "250px",
+        		}}
+		    >Discard Changes</button>	
                </form>
             </div>        
         
