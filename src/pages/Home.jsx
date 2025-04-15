@@ -102,16 +102,26 @@ return (
           }}
         >
         <p><strong>Name:</strong> {profile.fullName}</p>
-        <p>
-          <strong>Location:</strong>{" "}
+        <p
+          style={{
+            overflow: "hidden",
+            textOverflow: "ellipsis",
+          }}
+	>  
+	  <strong>Location:</strong>{" "}
           {profile.user_location !== "Not specified"
             ? profile.user_location
             : "Location not provided"}
         </p>
-        <p>
+        <p
+	  style={{
+    	    overflow: "hidden",
+    	    textOverflow: "ellipsis",
+	  }}
+	>
           <strong>Job Title:</strong>{" "}
-          {profile.current_job_title !== "Not specified"
-            ? profile.current_job_title
+          {profile.jobTitle !== "Not specified"
+            ? profile.jobTitle
             : "Job title not provided"}
         </p>
           <button onClick={() => navigate(`/viewprofile/${profile.userID}`)}>
