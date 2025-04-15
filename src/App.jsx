@@ -77,7 +77,11 @@ console.log("User:", auth.user);
 
          </Routes>
 	{/*how to sign out*/}
-        <button onClick={() => auth.signoutRedirect()}>Sign out</button> 
+        <button onClick={() => auth.signoutRedirect()}
+	  style={{
+            width: "250px",
+          }}
+	>Sign out</button> 
      </div>
     );
   }

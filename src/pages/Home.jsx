@@ -1,25 +1,38 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "react-oidc-context";
 
 const Home = () => {
+  const auth = useAuth();
+  const [token, setToken] = useState('');
   const [searchQuery, setSearchQuery] = useState("");
-  const [profiles, setProfiles] = useState([]);
   const [filteredProfiles, setFilteredProfiles] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
   const navigate = useNavigate();
 
   useEffect(() => {
     const fetchProfiles = async () => {
       setLoading(true);
+      setError("");
+    const idToken = auth.user.id_token;
+    setToken(idToken);
+
+      console.log("ID Token: ", idToken);
       try {
         const { data } = await axios.get(
-          `https://zimr7w3b2j.execute-api.us-west-1.amazonaws.com/Prod/search?fullName=${searchQuery}`
+         `/api/search?fullName=${encodeURIComponent(searchQuery)}`,
+        {
+            headers: {Authorization: `Bearer ${idToken}` },
+        }
         );
-        setProfiles(data);
-        setFilteredProfiles(data);
+        console.log("Profile data: ", data);
+
+	setFilteredProfiles(data.items); 
       } catch (err) {
-        console.error("Error fetching profiles:", err);
+        console.error("Search error:", err);
+        setError("Failed to fetch search results.");
       } finally {
         setLoading(false);
       }
@@ -28,7 +41,6 @@ const Home = () => {
     if (searchQuery) {
       fetchProfiles();
     } else {
-      setProfiles([]);
       setFilteredProfiles([]);
     }
   }, [searchQuery]);
@@ -37,11 +49,15 @@ const Home = () => {
     setSearchQuery(event.target.value);
   };
 
-  return (
+return (
     <div className="home-container">
       <h1>Welcome!</h1>
 
-      <button onClick={() => navigate("/viewprofile")}>View Profile</button>
+      <button onClick={() => navigate("/viewprofile")}
+	style={{
+    	width: "250px",
+	}}
+      >View Profile</button>
 
       {/* Search Bar */}
       <input
@@ -54,23 +70,68 @@ const Home = () => {
       />
 
       {loading && <p>Loading profiles...</p>}
+      {error && <p style={{ color: "red" }}>{error}</p>}
 
-      <div className="profile-list">
-        {filteredProfiles.length > 0 ? (
-          filteredProfiles.map((profile) => (
-            <div key={profile.id} className="profile-card">
-              <p><strong>{profile.fullName}</strong></p>
-              <p>{profile.email}</p>
-              <button onClick={() => navigate(`/viewprofile/${profile.id}`)}>View Profile</button>
-            </div>
-          ))
-        ) : (
-          !loading && searchQuery && <p>No profiles found matching "{searchQuery}".</p>
-        )}
-      </div>
+	<div
+	  className="profile-list"
+	  style={{
+    	    display: "flex",
+    	    flexWrap: "wrap",
+            gap: "16px",
+            justifyContent: "flex-start",
+  	  }}
+	>
+  	{filteredProfiles.length > 0 ? (
+    	  filteredProfiles.slice(0,10).map((profile) => (
+      	<div
+          key={profile.userID}
+          className="profile-card"
+          style={{
+ 
+            flex: "0 1 250px",
+            width: "250px",
+	    border: "1px solid #ccc",
+            padding: "10px",
+            borderRadius: "8px",
+            backgroundColor: "#f9f9f9",
+	    color: "#000",
+            boxShadow: "0 2px 4px rgba(0,0,0,0.1)",
+	    overflow: "hidden",
+	    textOverflow: "ellipsis",
+	    whiteSpace: "nowrap",
+          }}
+        >
+        <p><strong>Name:</strong> {profile.fullName}</p>
+        <p>
+          <strong>Location:</strong>{" "}
+          {profile.user_location !== "Not specified"
+            ? profile.user_location
+            : "Location not provided"}
+        </p>
+        <p>
+          <strong>Job Title:</strong>{" "}
+          {profile.current_job_title !== "Not specified"
+            ? profile.current_job_title
+            : "Job title not provided"}
+        </p>
+          <button onClick={() => navigate(`/viewprofile/${profile.userID}`)}>
+            View Profile
+          </button>
+        </div>
+    	))
+  	) : (
+    	  !loading && searchQuery && (
+      	  <p>No profiles found matching "{searchQuery}".</p>
+    	)
+  	)}
+	</div>
+
+		
+
     </div>
   );
 };
+
 
 export default Home;
 

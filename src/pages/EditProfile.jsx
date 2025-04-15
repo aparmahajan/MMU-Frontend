@@ -200,7 +200,7 @@ const EditProfile = () => {
                         }}
                     />
                     <button type="submit">Save Profile</button>
-		    <button onClick={() => navigate("/viewprofile")}>Discard Changes</button>		    
+		    <button onClick={() => navigate(`/viewprofile/${profile.id}`)}>Discard Changes</button>	
                </form>
             </div>        
         
