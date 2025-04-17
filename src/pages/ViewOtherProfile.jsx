@@ -12,15 +12,20 @@ const ViewOtherProfile = () => {
   const [profile, setProfile] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const navigate = useNavigate();
 
+  const [token, setToken] = useState("");
+
+  
   useEffect(() => {
     const fetchProfile = async () => {
       try {
         console.log("Fetching profile for userID:", userID);
         const idToken = auth.user?.id_token;
-        if (!idToken) {
-          throw new Error("No auth token found.");
-        }
+        setToken(idToken);
+        console.log("ID Token:", idToken);
+        const sub = auth.user.profile.sub;
+        console.log("UserID:", userID);
 
         const response = await axios.get(`/api/profile/${userID}`, {
           headers: {
