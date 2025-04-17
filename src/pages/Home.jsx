@@ -124,7 +124,8 @@ return (
             ? profile.jobTitle
             : "Job title not provided"}
         </p>
-          <button onClick={() => navigate(`/viewprofile/${profile.userID}`)}>
+          <button onClick={() => navigate(`/view-other-profile/${profile.userID}`)
+}>
             View Profile
           </button>
         </div>
