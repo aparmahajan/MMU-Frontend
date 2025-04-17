@@ -113,7 +113,7 @@ const EditProfile = () => {
                 }
             );
             
-            navigate("/view-profile"); // Redirect to the profile page after successful update
+            navigate("/viewprofile"); // Redirect to the profile page after successful update
         } catch (err) {
             console.error("Error updating profile:", err);
         }
@@ -209,7 +209,8 @@ const EditProfile = () => {
                           width: "250px",
                         }}
 		    >Save Profile</button>
-		    <button onClick={() => navigate(`/viewprofile/${profile.id}`)}
+		    {/*<button onClick={() => navigate(`/viewprofile/${profile.id}`)}*/}
+            <button onClick={() => navigate("/viewprofile")}
 			style={{
         		  width: "250px",
         		}}

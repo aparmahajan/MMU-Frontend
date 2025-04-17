@@ -67,8 +67,8 @@ console.log("User:", auth.user);
 
 	 <Routes>
  	  <Route path="/" element={<Home />} />
-          <Route path="/viewprofile" element={<ViewProfile />} />         
-	  <Route path="/" element={<Home />} />
+          
+     <Route path="/viewprofile" element={<ViewProfile />} />         
           <Route path="/about" element={<About />} />
           <Route path="/login" element={<Login />} />
           <Route path="/edit-profile" element={<EditProfile />} />
