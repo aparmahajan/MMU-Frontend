@@ -7,7 +7,7 @@ function About(){
     <div>
       <h1>About Page</h1>
       <button onClick={() => navigate("/")}>Go to Home</button>
-      <button onClick={() => navigate("/view-profile")}>View Profile</button>
+      <button onClick={() => navigate("/viewprofile")}>View Profile</button>
     </div>
   );
 }

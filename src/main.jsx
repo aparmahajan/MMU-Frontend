@@ -20,7 +20,6 @@ import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import './styles/index.css'
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Connections from "./pages/Connections";
 import { AuthProvider } from "react-oidc-context";
 
 const cognitoAuthConfig = {

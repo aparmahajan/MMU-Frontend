@@ -44,7 +44,7 @@ const EditProfile = () => {
     const [industry, setIndustry] = useState("");
     const [jobTitle, setJobTitle] = useState("");
     const [user_location, setLocation] = useState("");
-    const [expertise, setExpertise] = useState("");
+    const [expertise, setExpertise] = useState([]);
     const [education, setEducation] = useState("");
     const [seeking, setSeeking] = useState([]);
     
@@ -71,13 +71,14 @@ const EditProfile = () => {
                     }
                 );
                 console.log("Profile data:", data);
+                console.log("data.expertise", data.expertise, typeof data.expertise);
                 setFullName(data.fullName || "");
                 setEmail(data.email || "");
                 setProfilePicture(data.profilePicture || "");
                 setIndustry(data.industry || "");
                 setJobTitle(data.jobTitle || "");
                 setLocation(data.user_location || "");
-                setExpertise(data.expertise || "");
+                setExpertise(data.expertise ||[]);
                 setEducation(data.education || "");
                 setSeeking(data.seeking || []);
             } catch (err) {
@@ -168,11 +169,15 @@ const EditProfile = () => {
                     <Select
                         name="expertise"
                         options={expertiseOptions}
-                        isMulti={false}
+                        isMulti={true}
                         placeholder="Expertise"
-                        value={expertise ? { value: expertise, label: expertise } : null}
-                        onChange={(selectedOption) => {
-                            setExpertise(selectedOption?.value || "");
+                        value={expertise.map((value) => ({
+                            value,
+                            label: value,
+                        }))}
+                        onChange={(selectedOptions) => {
+                            const values = selectedOptions.map(option => option.value);
+                            setExpertise(values);
                         }}
                     />
 
@@ -204,7 +209,8 @@ const EditProfile = () => {
                           width: "250px",
                         }}
 		    >Save Profile</button>
-		    <button onClick={() => navigate(`/viewprofile/${profile.id}`)}
+		    {/*<button onClick={() => navigate(`/viewprofile/${profile.id}`)}*/}
+            <button onClick={() => navigate("/viewprofile")}
 			style={{
         		  width: "250px",
         		}}

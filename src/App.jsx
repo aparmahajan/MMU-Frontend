@@ -15,6 +15,7 @@ import About from "./pages/about";
 import Connections from "./pages/Connections";
 import Signup from "./pages/Signup";
 import ViewProfile from "./pages/ProfileView";
+import ViewOtherProfile from "./pages/ViewOtherProfile";
 
 function App() {
  const auth = useAuth();  
@@ -67,14 +68,14 @@ console.log("User:", auth.user);
 
 	 <Routes>
  	  <Route path="/" element={<Home />} />
-          <Route path="/viewprofile" element={<ViewProfile />} />         
-	  <Route path="/" element={<Home />} />
+          
+     <Route path="/viewprofile" element={<ViewProfile />} />  
+     <Route path="/view-other-profile/:userID" element={<ViewOtherProfile />} />        
           <Route path="/about" element={<About />} />
           <Route path="/login" element={<Login />} />
           <Route path="/edit-profile" element={<EditProfile />} />
           <Route path="/connections" element={<Connections />} />
-          <Route path="/signup" element={<Signup />} /> 
-
+          <Route path="/signup" element={<Signup />} /> "
          </Routes>
 	{/*how to sign out*/}
         <button onClick={() => auth.signoutRedirect()}
