@@ -50,14 +50,21 @@ const Home = () => {
   };
 
 return (
-    <div className="home-container">
+    <div className="home-container" style={{ display: "flex", flexDirection: "column" }}>
       <h1>Welcome!</h1>
 
       <button onClick={() => navigate("/viewprofile")}
 	style={{
     	width: "250px",
+	marginBottom: "10px",
 	}}
       >View Profile</button>
+
+      <button onClick={() => navigate("/Connections")}
+        style={{
+        width: "250px",
+        }}
+      >My Network</button>
 
       {/* Search Bar */}
       <input
@@ -126,7 +133,7 @@ return (
         </p>
           <button onClick={() => navigate(`/view-other-profile/${profile.userID}`)
 }>
-            View Profile
+            Connect
           </button>
         </div>
     	))
