@@ -112,7 +112,7 @@ const EditProfile = () => {
                 }
             );
             
-            navigate("/view-profile"); // Redirect to the profile page after successful update
+            navigate("/viewprofile"); // Redirect to the profile page after successful update
         } catch (err) {
             console.error("Error updating profile:", err);
         }
