@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useAuth } from "react-oidc-context";
-import "../styles/LogSignin.css"; // Optional, reuse your CSS
+import "../styles/LogSignin.css";
 
 const ViewProfile = () => {
     const auth = useAuth();
@@ -23,12 +23,9 @@ const ViewProfile = () => {
             const sub = auth.user.profile.sub;
 
             try {
-                const { data } = await axios.get(
-                    `/api/users/${sub}`,
-                    {
-                        headers: { Authorization: `Bearer ${idToken}` },
-                    }
-                );
+                const { data } = await axios.get(`/api/users/${sub}`, {
+                    headers: { Authorization: `Bearer ${idToken}` },
+                });
                 setProfileData(data);
             } catch (err) {
                 console.error("Error fetching profile data:", err);
@@ -41,37 +38,82 @@ const ViewProfile = () => {
     if (!profileData) return <p>Loading profile...</p>;
 
     return (
-        <div className="profile-container">
-            <h1>My Profile</h1>
-            <div className="profile-info">
-                {/*{profileData.profilePicture && (
-                    <img
-                        src={profileData.profilePicture}
-                        alt="Profile"
-                        className="profile-picture"
-                        style={{ width: "150px", borderRadius: "10px", marginBottom: "10px" }}
-                    />
-                )}*/}
-                <p><strong>Full Name:</strong> {profileData.fullName}</p>
-                <p><strong>Email:</strong> {profileData.email}</p>
-                <p><strong>Industry:</strong> {profileData.industry}</p>
-                <p><strong>Job Title:</strong> {profileData.jobTitle}</p>
-                <p><strong>Location:</strong> {profileData.location}</p>
-                <p><strong>Expertise:</strong> {Array.isArray(profileData.expertise) ? profileData.expertise.join(", ") : profileData.expertise}</p>
-                <p><strong>Education:</strong> {profileData.education}</p>
-                <p><strong>Seeking:</strong> {profileData.seeking?.join(", ")}</p>
+        <div style={{
+            display: "flex",
+            justifyContent: "center",
+            padding: "40px",
+        }}>
+            <div style={{
+                background: "#fff",
+                padding: "30px",
+                borderRadius: "12px",
+                boxShadow: "0 0 10px rgba(0, 0, 0, 0.1)",
+                maxWidth: "800px",
+                width: "100%",
+                color: "#000", 
+                
 
-                <button onClick={() => navigate("/edit-profile")}
-		  style={{
-                    width: "250px",
-                  }}
-		>Edit Profile</button>
-		<button onClick={() => navigate("/")}
-		  style={{
-                    width: "250px",
-                  }}
-		>Return to Home</button> 
-           </div>
+            }}>
+
+                <h1 style={{ textAlign: "center", marginBottom: "30px" }}>My Profile</h1>
+
+                <div style={{
+                    display: "flex",
+                    alignItems: "center",
+                    marginBottom: "30px",
+                    gap: "30px",
+                    
+                }}>
+                    {profileData.profilePicture ? (
+                        <img
+                            src={profileData.profilePicture}
+                            alt="Profile"
+                            style={{
+                                width: "150px",
+                                height: "150px",
+                                objectFit: "cover",
+                                borderRadius: "10px",
+                            }}
+                        />
+                    ) : (
+                        <div style={{
+                            width: "150px",
+                            height: "150px",
+                            background: "#eee",
+                            borderRadius: "10px",
+                            
+                        }} />
+                    )}
+                    <div style={{ marginBottom: "20px", textAlign: "center" }}>
+                        <p><strong>Full Name:</strong> {profileData.fullName}</p>
+                        <p><strong>Email:</strong> {profileData.email}</p>
+                    </div>
+                </div>
+
+                <div style={{ marginBottom: "20px", textAlign: "center" }}>
+                    <p><strong>Industry:</strong> {profileData.industry}</p>
+                    <p><strong>Job Title:</strong> {profileData.jobTitle}</p>
+                    <p><strong>Location:</strong> {profileData.location}</p>
+                    <p><strong>Expertise:</strong> {Array.isArray(profileData.expertise) ? profileData.expertise.join(", ") : profileData.expertise}</p>
+                    <p><strong>Education:</strong> {profileData.education}</p>
+                    <p><strong>Seeking:</strong> {profileData.seeking?.join(", ") || "N/A"}</p>
+                </div>
+
+                <div style={{ display: "flex", gap: "20px", justifyContent: "center" }}>
+                    <button
+                        onClick={() => navigate("/edit-profile")}
+                        style={{ width: "200px" }}
+                    >
+                        Edit Profile
+                    </button>
+                    <button
+                        onClick={() => navigate("/")}
+                        style={{ width: "200px" }}
+                    >
+                        Return to Home
+                    </button>
+                </div>
+            </div>
         </div>
     );
 };
