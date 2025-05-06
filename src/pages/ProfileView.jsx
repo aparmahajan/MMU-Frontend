@@ -38,21 +38,26 @@ const ViewProfile = () => {
     if (!profileData) return <p>Loading profile...</p>;
 
     return (
+        <div>
+            <div className="sign-out-button">
+            <button onClick={() => auth.signoutRedirect()}
+            >Sign out</button> 
+            </div>
+        
         <div style={{
             display: "flex",
             justifyContent: "center",
-            padding: "40px",
+            
+            alignSelf: "center",
         }}>
             <div style={{
-                background: "#fff",
+                background: "rgba(215, 200, 178, 0.9)", // slightly transparent background
                 padding: "30px",
-                borderRadius: "12px",
-                boxShadow: "0 0 10px rgba(0, 0, 0, 0.1)",
+                border: "4px solid rgba(75, 52, 15, 0.6)", // semi-transparent border
+             
                 maxWidth: "800px",
                 width: "100%",
-                color: "#000", 
-                
-
+                color: "#4B340F",
             }}>
 
                 <h1 style={{ textAlign: "center", marginBottom: "30px" }}>My Profile</h1>
@@ -98,6 +103,11 @@ const ViewProfile = () => {
                     <p><strong>Education:</strong> {profileData.education}</p>
                     <p><strong>Seeking:</strong> {profileData.seeking?.join(", ") || "N/A"}</p>
                 </div>
+                <div>
+                    <p style={{
+                        padding: "10px",
+                    }}></p>
+                </div>
 
                 <div style={{ display: "flex", gap: "20px", justifyContent: "center" }}>
                     <button
@@ -114,6 +124,7 @@ const ViewProfile = () => {
                     </button>
                 </div>
             </div>
+        </div>
         </div>
     );
 };
