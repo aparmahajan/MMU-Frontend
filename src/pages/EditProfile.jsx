@@ -99,54 +99,79 @@ const EditProfile = () => {
     if (loading) return <p>Loading profile...</p>;
     if (error) return <p style={{ color: "red" }}>{error}</p>;
 
+
+    const inputStyle = {
+        backgroundColor: "rgba(255, 255, 255, 0.6)",
+        padding: "10px 5%",              // 10px top/bottom, 5% left/right
+        borderRadius: "6px",
+        border: "1px solid #4B340F",
+        color: "#4B340F",
+        fontSize: "1rem",
+        width: "100%",
+        boxSizing: "border-box"
+    };
+      
+      
+
     return (
+        <div>
+
+                <div className="sign-out-button">
+                    <button onClick={() => auth.signoutRedirect()}
+                    >Sign out</button> 
+                </div>
         <div style={{ display: "flex", justifyContent: "center", padding: "40px" }}>
             <div style={{
-                background: "#fff",
+                background: "rgba(215, 200, 178, 0.9)", // slightly transparent background
                 padding: "30px",
-                borderRadius: "12px",
-                boxShadow: "0 0 10px rgba(0, 0, 0, 0.1)",
+                border: "4px solid rgba(75, 52, 15, 0.6)", // semi-transparent border
+
                 maxWidth: "800px",
                 width: "100%",
-                color: "#000",
-                
+                color: "#4B340F",
             }}>
                 <h1 style={{ textAlign: "center", marginBottom: "30px" }}>Edit Profile</h1>
 
                 <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "15px" }}>
-                    <input
+                    <input 
                         type="text"
                         placeholder="Full Name"
+                        style={inputStyle}
                         value={profileData.fullName}
                         onChange={(e) => setProfileData({ ...profileData, fullName: e.target.value })}
                     />
                     <input
                         type="email"
                         placeholder="Email"
+                        style={inputStyle}
                         value={profileData.email}
                         onChange={(e) => setProfileData({ ...profileData, email: e.target.value })}
                     />
                     <input
                         type="text"
                         placeholder="Profile Picture URL"
+                        style={inputStyle}
                         value={profileData.profilePicture}
                         onChange={(e) => setProfileData({ ...profileData, profilePicture: e.target.value })}
                     />
                     <input
                         type="text"
                         placeholder="Industry"
+                        style={inputStyle}
                         value={profileData.industry}
                         onChange={(e) => setProfileData({ ...profileData, industry: e.target.value })}
                     />
                     <input
                         type="text"
                         placeholder="Job Title"
+                        style={inputStyle}
                         value={profileData.jobTitle}
                         onChange={(e) => setProfileData({ ...profileData, jobTitle: e.target.value })}
                     />
                     <input
                         type="text"
                         placeholder="Location"
+                        style={inputStyle}
                         value={profileData.user_location}
                         onChange={(e) => setProfileData({ ...profileData, user_location: e.target.value })}
                     />
@@ -165,6 +190,7 @@ const EditProfile = () => {
                     <input
                         type="text"
                         placeholder="Education"
+                        style={inputStyle}
                         value={profileData.education}
                         onChange={(e) => setProfileData({ ...profileData, education: e.target.value })}
                     />
@@ -188,6 +214,7 @@ const EditProfile = () => {
                     </div>
                 </form>
             </div>
+        </div>
         </div>
     );
 };
