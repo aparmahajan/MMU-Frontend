@@ -11,6 +11,7 @@ const Home = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const navigate = useNavigate();
+  const [pendingConnections, setPendingConnections] = useState({});
 
   useEffect(() => {
     const fetchProfiles = async () => {
@@ -27,6 +28,7 @@ const Home = () => {
             headers: {Authorization: `Bearer ${idToken}` },
         }
         );
+ 
         console.log("Profile data: ", data);
 
 	setFilteredProfiles(data.items); 
@@ -48,6 +50,36 @@ const Home = () => {
   const handleSearchChange = (event) => {
     setSearchQuery(event.target.value);
   };
+
+  const handleConnect = async (otherUserID) => {
+    try {
+      setPendingConnections(prev => ({ ...prev, [otherUserID]: true }));
+      const response = await axios.post(
+	`/api/connections`,
+        {
+          userId1: auth.user.profile.sub,
+          userId2: otherUserID,
+        },
+        {
+          headers: { Authorization: `Bearer ${token}` }
+        }
+      );
+      console.log('Connection request sent!', response.data);
+      alert('Connection request sent!');
+    } catch (error) {
+      console.error('Failed to send connection request', error);
+      alert('Failed to send connection request.');
+      
+      setPendingConnections(prev => {
+        const updated = { ...prev };
+        delete updated[otherUserID];
+        return updated;
+      });
+
+    }
+  };
+
+
 
 return (
     <div className="home-container" style={{ display: "flex", flexDirection: "column" }}>
@@ -131,9 +163,8 @@ return (
             ? profile.jobTitle
             : "Job title not provided"}
         </p>
-          <button onClick={() => navigate(`/view-other-profile/${profile.userID}`)
-}>
-            Connect
+          <button onClick={() => handleConnect(profile.userID)}>  
+	    Connect
           </button>
         </div>
     	))
