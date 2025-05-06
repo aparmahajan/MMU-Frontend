@@ -39,22 +39,10 @@ const ViewProfile = () => {
 
     return (
         <div>
+            <div className="sign-out-button">
             <button onClick={() => auth.signoutRedirect()}
-	  style={{
-            top: "20px",
-            right: "20px",
-            position: "absolute",
-            width: "150px",
-            padding: "10px",
-            background: "#CC6666",
-            color: "#fff",
-            border: "none",
-            borderRadius: "8px",
-            cursor: "pointer",
-            fontWeight: "bold",
-            
-          }}
-	>Sign out</button> 
+            >Sign out</button> 
+            </div>
         
         <div style={{
             display: "flex",
@@ -63,14 +51,13 @@ const ViewProfile = () => {
             alignSelf: "center",
         }}>
             <div style={{
-                background: "#fff",
+                background: "rgba(215, 200, 178, 0.9)", // slightly transparent background
                 padding: "30px",
-                borderRadius: "12px",
-                boxShadow: "0 0 10px rgba(0, 0, 0, 0.1)",
+                border: "4px solid rgba(75, 52, 15, 0.6)", // semi-transparent border
+             
                 maxWidth: "800px",
                 width: "100%",
-                color: "#CC6666", 
-                 
+                color: "#4B340F",
             }}>
 
                 <h1 style={{ textAlign: "center", marginBottom: "30px" }}>My Profile</h1>
