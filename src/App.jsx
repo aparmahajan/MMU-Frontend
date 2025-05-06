@@ -65,6 +65,7 @@ console.log("User:", auth.user);
   if (auth.isAuthenticated) {
     return (
       <div>
+        
 
 	 <Routes>
  	  <Route path="/" element={<Home />} />
@@ -78,11 +79,7 @@ console.log("User:", auth.user);
           <Route path="/signup" element={<Signup />} /> "
          </Routes>
 	{/*how to sign out*/}
-        <button onClick={() => auth.signoutRedirect()}
-	  style={{
-            width: "250px",
-          }}
-	>Sign out</button> 
+        
      </div>
     );
   }
