@@ -98,7 +98,7 @@ const ViewProfile = () => {
                 <div style={{ marginBottom: "20px", textAlign: "center" }}>
                     <p><strong>Industry:</strong> {profileData.industry}</p>
                     <p><strong>Job Title:</strong> {profileData.jobTitle}</p>
-                    <p><strong>Location:</strong> {profileData.location}</p>
+                    <p><strong>Location:</strong> {profileData.user_location}</p>
                     <p><strong>Expertise:</strong> {Array.isArray(profileData.expertise) ? profileData.expertise.join(", ") : profileData.expertise}</p>
                     <p><strong>Education:</strong> {profileData.education}</p>
                     <p><strong>Seeking:</strong> {profileData.seeking?.join(", ") || "N/A"}</p>
