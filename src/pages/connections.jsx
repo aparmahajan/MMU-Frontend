@@ -7,7 +7,7 @@ function Connections() {
   const auth = useAuth();
   const navigate = useNavigate();
   const [token, setToken] = useState("");
-  const [pending, setPending] = useState([]);
+  const [incoming, setIncoming] = useState([]);
   const [connected, setConnected] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
@@ -33,9 +33,9 @@ function Connections() {
           : response.data;
 
 	console.log("Parsed response from Lambda:", parsed);
-	
-	setPending(parsed.pending || []);
-	setConnected(parsed.connected || []);
+
+	setIncoming(parsed.incoming_connections || []);
+        setConnected(parsed.mutual_connections || []);
 
       } catch (err) {
         console.error("Error fetching connections", err);
@@ -54,10 +54,10 @@ function Connections() {
         userId1: auth.user.profile.sub,
         userId2: conn.userID1  
       }, {
-        headers: { Authorization: `Bearer ${idToken}` }
+        headers: { Authorization: `Bearer ${token}` }
       });
 
-      setPending(prev => prev.filter(c =>
+      setIncoming(prev => prev.filter(c =>
         !(c.userID1 === conn.userID1 && c.userID2 === conn.userID2)
       ));
 
@@ -71,43 +71,108 @@ function Connections() {
     }
   };
 
+
+console.log("Incoming length:", incoming.length);
+        console.log("Incoming contents:", incoming);
+
   return (
-    <div style={{ maxWidth: "600px", margin: "0 auto" }}>
+    <div style={{
+ 	display: "flex",
+	flexDirection: "column",
+	alignItems: "center",
+	padding: "40px 16px",
+	color: "black"
+	
+    }}>
       <h2>Pending Requests:</h2>
       {loading && <p>Loading...</p>}
       {error && <p style={{ color: "red" }}>{error}</p>}
-      {pending.length === 0 && !loading ? <p>No pending requests.</p> : null}
-      {pending.map((conn, idx) => (
-        <div key={idx} style={{
-          border: "1px solid #ccc",
-          marginBottom: "10px",
-          padding: "10px",
-          borderRadius: "8px"
-        }}>
-          <p><strong>From:</strong> {conn.userID1}</p>
-          <button onClick={() => handleAccept(conn)} style={{ marginRight: "10px" }}>
-            Accept
-          </button>
-          {/* Ignore button disabled for now */}
-          {/* <button onClick={() => handleIgnore(conn)}>Ignore</button> */}
-        </div>
-      ))}
+      {incoming.length === 0 && !loading ? <p>No incoming requests.</p> : null}
+ 
+
+	<div
+ 	 className="profile-list"
+  	 style={{
+    	    display: "flex",
+    	    flexWrap: "wrap",
+    	    gap: "16px",
+      	    justifyContent: "center", // <-- center the cards
+    	    marginBottom: "40px"
+  	  }}
+	>
+	
+       {incoming.map((conn, idx) => {
+          const fromUser = conn.userID || conn.userID1;
+          return (
+            <div
+              key={idx}
+              className="profile-card"
+              style={{
+                flex: "0 1 250px",
+                width: "250px",
+                border: "1px solid #ccc",
+                padding: "10px",
+                borderRadius: "8px",
+                backgroundColor: "#f9f9f9",
+                color: "#000",
+                boxShadow: "0 2px 4px rgba(0,0,0,0.1)",
+                overflow: "hidden",
+                textOverflow: "ellipsis",
+                whiteSpace: "nowrap",
+              }}
+            >
+              <p><strong>User ID:</strong> {fromUser}</p>
+              {/* You can add future fields like full name, etc. here */}
+              <button onClick={() => handleAccept(conn)}>
+                Accept
+              </button>
+            </div>
+          );
+        })}
+      </div>
 
       <h2 style={{ marginTop: "30px" }}>My Connections:</h2>
       {connected.length === 0 && !loading ? <p>No connections yet.</p> : null}
-      {connected.map((conn, idx) => {
-        const otherUser = conn.userID1 === auth.user.profile.sub ? conn.userID2 : conn.userID1;
-        return (
-          <div key={idx} style={{
-            border: "1px solid #ccc",
-            marginBottom: "10px",
-            padding: "10px",
-            borderRadius: "8px"
-          }}>
-            <p><strong>Connected with:</strong> {otherUser}</p>
-          </div>
-        );
-      })}
+
+	<div
+ 	 className="profile-list"
+  	  style={{
+    	  display: "flex",
+    	  flexWrap: "wrap",
+    	  gap: "16px",
+    	  justifyContent: "center", // <-- center the cards
+   	  marginBottom: "40px"
+ 	 }}
+	>        
+
+	{connected.map((conn, idx) => {
+          const otherUser = conn.userID1 === auth.user.profile.sub
+            ? conn.userID2
+            : conn.userID1;
+          return (
+            <div
+              key={fromUser}
+              className="profile-card"
+              style={{
+                flex: "0 1 250px",
+                width: "250px",
+                border: "1px solid #ccc",
+                padding: "10px",
+                borderRadius: "8px",
+                backgroundColor: "#f9f9f9",
+                color: "#000",
+                boxShadow: "0 2px 4px rgba(0,0,0,0.1)",
+                overflow: "hidden",
+                textOverflow: "ellipsis",
+                whiteSpace: "nowrap",
+              }}
+            >
+              <p><strong>Connected with:</strong> {otherUser}</p>
+              <p><strong>Since:</strong> {conn.connectionSince}</p>
+            </div>
+          );
+        })}
+      </div>
 
       <button onClick={() => navigate("/")} style={{ marginTop: "30px", width: "250px" }}>
         Return to Home
@@ -117,4 +182,3 @@ function Connections() {
 }
 
 export default Connections;
-
