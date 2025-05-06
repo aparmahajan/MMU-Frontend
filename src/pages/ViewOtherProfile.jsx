@@ -1,51 +1,53 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useAuth } from "react-oidc-context";
-import "../styles/LogSignin.css"; // Optional, reuse your CSS
-
+import "../styles/LogSignin.css";
 
 const ViewOtherProfile = () => {
-  const { userID } = useParams();
   const auth = useAuth();
+  const { userID } = useParams();
   const [profile, setProfile] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
   useEffect(() => {
     const fetchProfile = async () => {
-      try {
-        console.log("Fetching profile for userID:", userID);
-        const idToken = auth.user?.id_token;
-        if (!idToken) {
-          throw new Error("No auth token found.");
-        }
+      if (!auth.isAuthenticated || !auth.user || !userID) {
+        setError("Not authorized or missing user ID.");
+        setLoading(false);
+        return;
+      }
 
-        const response = await axios.get(`/api/profile/${userID}`, {
+      try {
+        const access_token = auth.user.access_token;
+        console.log("Access Token:", access_token);
+        console.log("Fetching profile for userID:", userID);
+
+        const { data } = await axios.get(`/api/user/${userID}`, {
           headers: {
-            Authorization: `Bearer ${idToken}`,
+            Authorization: `Bearer ${access_token}`,
           },
         });
 
-        console.log("Fetched profile:", response.data);
-        setProfile(response.data);
+        setProfile(data);
       } catch (err) {
         console.error("Error fetching profile:", err);
-        setError("Could not load profile.");
+        if (err.response?.status === 403) {
+          setError("You are not authorized to view this profile.");
+        } else {
+          setError("Could not load profile.");
+        }
       } finally {
         setLoading(false);
       }
     };
 
-    if (userID) {
-      fetchProfile();
-    }
-  }, [userID]);
+    fetchProfile();
+  }, [userID, auth.isAuthenticated, auth.user]);
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p style={{ color: "red" }}>{error}</p>;
-
   if (!profile) return <p>No profile found.</p>;
 
   return (
@@ -53,7 +55,12 @@ const ViewOtherProfile = () => {
       <h1>Profile</h1>
       <p><strong>Name:</strong> {profile.fullName}</p>
       <p><strong>Location:</strong> {profile.user_location}</p>
-      <p><strong>Job Title:</strong> {profile.jobTitle}</p>
+      <p>
+        <strong>Job Title:</strong>{" "}
+        {profile.jobTitle && profile.jobTitle !== "Not specified"
+          ? profile.jobTitle
+          : "Job title not provided"}
+      </p>
     </div>
   );
 };
