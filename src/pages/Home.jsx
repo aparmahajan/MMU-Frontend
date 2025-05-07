@@ -82,6 +82,11 @@ const Home = () => {
 
 
 return (
+  <div>
+            <div className="sign-out-button">
+            <button onClick={() => auth.signoutRedirect()}
+            >Sign out</button> 
+            </div>
     <div className="home-container" style={{ display: "flex", flexDirection: "column" }}>
       <h1>Welcome!</h1>
 
@@ -178,6 +183,7 @@ return (
 		
 
     </div>
+  </div>
   );
 };
 
