@@ -88,7 +88,7 @@ return (
             >Sign out</button> 
             </div>
     <div className="home-container" style={{ display: "flex", flexDirection: "column" }}>
-      <h1>Welcome!</h1>
+      <h1 style={{color: "black"}} >Welcome!</h1>
 
       <button onClick={() => navigate("/viewprofile")}
 	style={{
