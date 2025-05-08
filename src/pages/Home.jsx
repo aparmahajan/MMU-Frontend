@@ -54,15 +54,16 @@ const Home = () => {
   const handleConnect = async (otherUserID) => {
     try {
       setPendingConnections(prev => ({ ...prev, [otherUserID]: true }));
-      const response = await axios.post(
+	console.log("Token being sent: ", `${token}`);
+	const response = await axios.post(
 	`/api/connections`,
         {
           userId1: auth.user.profile.sub,
           userId2: otherUserID,
         },
         {
-          headers: { Authorization: `Bearer ${token}` }
-        }
+         headers: { Authorization: `Bearer ${token}` }
+	}
       );
       console.log('Connection request sent!', response.data);
       alert('Connection request sent!');
@@ -174,8 +175,6 @@ return (
     	)
   	)}
 	</div>
-
-		
 
     </div>
   );
