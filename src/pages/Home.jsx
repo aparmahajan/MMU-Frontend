@@ -88,8 +88,8 @@ return (
             <button onClick={() => auth.signoutRedirect()}
             >Sign out</button> 
             </div>
-    <div className="home-container" style={{ display: "flex", flexDirection: "column" }}>
-      <h1 style={{color: "black"}} >Welcome!</h1>
+    <div className="home-container" style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", }}>
+      <h1 style={{color: "black"}} >Welcome to Melanin Meetups!</h1>
 
       <button onClick={() => navigate("/viewprofile")}
 	style={{
@@ -107,11 +107,11 @@ return (
       {/* Search Bar */}
       <input
         type="text"
-        placeholder="Search profiles by name..."
+        placeholder="Search profiles by name (case sensitive)"
         value={searchQuery}
         onChange={handleSearchChange}
         className="search-bar"
-        style={{ display: "block", margin: "20px 0", padding: "8px", width: "100%" }}
+        style={{ display: "block", margin: "20px 0", padding: "8px", width: "250px" }}
       />
 
       {loading && <p>Loading profiles...</p>}
