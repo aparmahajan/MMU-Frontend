@@ -10,7 +10,7 @@ const ViewOtherProfile = () => {
   const [profile, setProfile] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
-
+  const apiUrl = import.meta.env.VITE_API_URL;
   useEffect(() => {
     const fetchProfile = async () => {
       if (!auth.isAuthenticated || !auth.user || !userID) {
@@ -24,7 +24,7 @@ const ViewOtherProfile = () => {
         console.log("Access Token:", access_token);
         console.log("Fetching profile for userID:", userID);
 
-        const { data } = await axios.get(`/api/user/${userID}`, {
+        const { data } = await axios.get(`${apiUrl}/user/${userID}`, {
           headers: {
             Authorization: `Bearer ${access_token}`,
           },

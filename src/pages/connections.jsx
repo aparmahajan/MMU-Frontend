@@ -11,7 +11,8 @@ function Connections() {
   const [connected, setConnected] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
-
+  const apiUrl = import.meta.env.VITE_API_URL;
+  
   useEffect(() => {
     const fetchConnections = async () => {
       const idToken = auth.user.id_token;
@@ -24,7 +25,7 @@ function Connections() {
 		
 	const userID = auth.user.profile.sub;
 
-        const response = await axios.get(`/api/connections/${userID}`, {
+        const response = await axios.get(`${apiUrl}/connections/${userID}`, {
           headers: { Authorization: `Bearer ${idToken}` },
         });
 
@@ -57,7 +58,7 @@ function Connections() {
 	console.log("Connecting userId1:", auth.user.profile.sub);
 	console.log("Connecting userId2:", fromUser);
 
-	const response = await axios.post("/api/connections", {
+	const response = await axios.post("${apiUrl}/connections", {
         userId1: auth.user.profile.sub,
         userId2: fromUser  
       }, {

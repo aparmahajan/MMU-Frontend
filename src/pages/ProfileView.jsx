@@ -7,7 +7,7 @@ import "../styles/LogSignIn.css";
 const ViewProfile = () => {
     const auth = useAuth();
     const navigate = useNavigate();
-
+    const apiUrl = import.meta.env.VITE_API_URL;
     const [token, setToken] = useState("");
     const [profileData, setProfileData] = useState(null);
 
@@ -23,7 +23,7 @@ const ViewProfile = () => {
             const sub = auth.user.profile.sub;
 
             try {
-                const { data } = await axios.get(`/api/users/${sub}`, {
+                const { data } = await axios.get(`${apiUrl}/users/${sub}`, {
                     headers: { Authorization: `Bearer ${idToken}` },
                 });
                 setProfileData(data);

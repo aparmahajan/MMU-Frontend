@@ -8,7 +8,7 @@ import "../styles/LogSignIn.css";
 const EditProfile = () => {
     const auth = useAuth();
     const navigate = useNavigate();
-
+    const apiUrl = import.meta.env.VITE_API_URL;
     const [token, setToken] = useState("");
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState("");
@@ -58,7 +58,7 @@ const EditProfile = () => {
             const sub = auth.user.profile.sub;
 
             try {
-                const { data } = await axios.get(`/api/users/${sub}`, {
+                const { data } = await axios.get(`${apiUirl}/users/${sub}`, {
                     headers: { Authorization: `Bearer ${idToken}` },
                 });
                 setProfileData({
@@ -86,7 +86,7 @@ const EditProfile = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            await axios.patch(`/api/users/${auth.user.profile.sub}`, profileData, {
+            await axios.patch(`${apiUrl}/users/${auth.user.profile.sub}`, profileData, {
                 headers: { Authorization: `Bearer ${token}` },
             });
             navigate("/viewprofile");

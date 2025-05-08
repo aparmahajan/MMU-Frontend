@@ -12,7 +12,8 @@ const Home = () => {
   const [error, setError] = useState("");
   const navigate = useNavigate();
   const [pendingConnections, setPendingConnections] = useState({});
-
+  const apiUrl = import.meta.env.VITE_API_URL;
+  
   useEffect(() => {
     const fetchProfiles = async () => {
       setLoading(true);
@@ -23,7 +24,7 @@ const Home = () => {
       console.log("ID Token: ", idToken);
       try {
         const { data } = await axios.get(
-         `/api/search?fullName=${encodeURIComponent(searchQuery)}`,
+         `${apiUrl}/search?fullName=${encodeURIComponent(searchQuery)}`,
         {
             headers: {Authorization: `Bearer ${idToken}` },
         }
@@ -56,7 +57,7 @@ const Home = () => {
       setPendingConnections(prev => ({ ...prev, [otherUserID]: true }));
 	console.log("Token being sent: ", `${token}`);
 	const response = await axios.post(
-	`/api/connections`,
+	`${apiUrl}/connections`,
         {
           userId1: auth.user.profile.sub,
           userId2: otherUserID,
