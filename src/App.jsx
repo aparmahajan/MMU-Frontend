@@ -85,14 +85,23 @@ console.log("User:", auth.user);
     );
   }
 
-  return (
-    <div>
-      <button onClick={() => auth.signinRedirect()}>Sign in</button>
-      <button onClick={() => signOutRedirect()}>Sign out</button> 
-    
-    </div>
-  );
-}
+return (
+  <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+    <button 
+      style={{ width: '200px', padding: '10px' }} 
+      onClick={() => auth.signinRedirect()}
+    >
+      Sign in/Sign Up
+    </button>
+    <button 
+      style={{ width: '200px', padding: '10px' }} 
+      onClick={() => signOutRedirect()}
+    >
+      Sign out
+    </button>
+  </div>
+);
 
+}
 export default App;
 
