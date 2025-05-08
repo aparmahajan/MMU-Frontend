@@ -50,24 +50,35 @@ function Connections() {
 
   const handleAccept = async (conn) => {
     try {
-      await axios.post("/api/connections", {
+	
+	const fromUser = conn.userID1 || conn.userID;
+	console.log("Token being sent: ", `${token}`);	
+	console.log("Token length:", token.length);
+	console.log("Connecting userId1:", auth.user.profile.sub);
+	console.log("Connecting userId2:", fromUser);
+
+	const response = await axios.post("/api/connections", {
         userId1: auth.user.profile.sub,
-        userId2: conn.userID1  
+        userId2: fromUser  
       }, {
         headers: { Authorization: `Bearer ${token}` }
-      });
+
+	});
+
+      console.log("Accept response:", response.data);
 
       setIncoming(prev => prev.filter(c =>
-        !(c.userID1 === conn.userID1 && c.userID2 === conn.userID2)
+        !(c.userID1 === fromUser && c.userID2 === auth.user.profile.sub)
       ));
 
       setConnected(prev => [...prev, {
         userID1: auth.user.profile.sub,
-        userID2: conn.userID1,
+        userID2: fromUser,
         connectionSince: new Date().toLocaleDateString()  // for display
       }]);
     } catch (err) {
       console.error("Failed to accept request", err);
+      console.log("Error response:", err.response?.data);
     }
   };
 
@@ -103,6 +114,7 @@ console.log("Incoming length:", incoming.length);
 	
        {incoming.map((conn, idx) => {
           const fromUser = conn.userID || conn.userID1;
+  
           return (
             <div
               key={idx}
@@ -151,7 +163,7 @@ console.log("Incoming length:", incoming.length);
             : conn.userID1;
           return (
             <div
-              key={fromUser}
+              key={idx}
               className="profile-card"
               style={{
                 flex: "0 1 250px",

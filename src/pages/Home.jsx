@@ -54,15 +54,16 @@ const Home = () => {
   const handleConnect = async (otherUserID) => {
     try {
       setPendingConnections(prev => ({ ...prev, [otherUserID]: true }));
-      const response = await axios.post(
+	console.log("Token being sent: ", `${token}`);
+	const response = await axios.post(
 	`/api/connections`,
         {
           userId1: auth.user.profile.sub,
           userId2: otherUserID,
         },
         {
-          headers: { Authorization: `Bearer ${token}` }
-        }
+         headers: { Authorization: `Bearer ${token}` }
+	}
       );
       console.log('Connection request sent!', response.data);
       alert('Connection request sent!');
@@ -82,6 +83,11 @@ const Home = () => {
 
 
 return (
+  <div>
+            <div className="sign-out-button">
+            <button onClick={() => auth.signoutRedirect()}
+            >Sign out</button> 
+            </div>
     <div className="home-container" style={{ display: "flex", flexDirection: "column" }}>
       <h1 style={{color: "black"}} >Welcome!</h1>
 
@@ -175,9 +181,8 @@ return (
   	)}
 	</div>
 
-		
-
     </div>
+  </div>
   );
 };
 
