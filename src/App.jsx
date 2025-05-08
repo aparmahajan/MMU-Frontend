@@ -12,7 +12,7 @@ import Login from "./pages/Login";
 import Home from "./pages/Home";
 import EditProfile from "./pages/EditProfile.jsx";
 import About from "./pages/about";
-import Connections from "./pages/Connections";
+import Connections from "./pages/connections";
 import Signup from "./pages/Signup";
 import ViewProfile from "./pages/ProfileView";
 import ViewOtherProfile from "./pages/ViewOtherProfile";
