@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useAuth } from "react-oidc-context";
 import Select from "react-select";
-import "../styles/LogSignin.css";
+import "../styles/LogSignIn.css";
 
 const EditProfile = () => {
     const auth = useAuth();

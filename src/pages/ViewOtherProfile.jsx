@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useAuth } from "react-oidc-context";
-import "../styles/LogSignin.css";
+import "../styles/LogSignIn.css";
 
 const ViewOtherProfile = () => {
   const auth = useAuth();
