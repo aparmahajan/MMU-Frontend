@@ -28,10 +28,11 @@ console.log("User:", auth.user);
  useEffect(() => {
     if (auth.isAuthenticated) {
 
+	const apiUrl = import.meta.env.VITE_API_URL;
 	const idToken = auth.user?.id_token;
 	const searchByName = "Test"; // use state
       axios
-        .get(`/api/search?fullName=${searchByName}`, {
+        .get(`${apiUrl}/search?fullName=${searchByName}`, {
           headers: { Authorization: `Bearer ${idToken}` },
         })
         .then((response) => {
