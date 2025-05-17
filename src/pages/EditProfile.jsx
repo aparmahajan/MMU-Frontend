@@ -58,7 +58,7 @@ const EditProfile = () => {
             const sub = auth.user.profile.sub;
 
             try {
-                const { data } = await axios.get(`${apiUirl}/users/${sub}`, {
+                const { data } = await axios.get(`${apiUrl}/users/${sub}`, {
                     headers: { Authorization: `Bearer ${idToken}` },
                 });
                 setProfileData({
