@@ -87,8 +87,9 @@ const EditProfile = () => {
         e.preventDefault();
         try {
             await axios.patch(`${apiUrl}/users/${auth.user.profile.sub}`, profileData, {
-                headers: { Authorization: `Bearer ${token}` },
-            });
+                headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json', },
+            withCredentials: true,
+	    });
             navigate("/viewprofile");
         } catch (err) {
             setError("Failed to update profile.");
